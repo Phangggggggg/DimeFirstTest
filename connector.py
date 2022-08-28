@@ -20,4 +20,20 @@ class Connector:
             values = (d['date'],d['label'],d['adjDividend'],d['dividend'],d['recordDate'],d['paymentDate'],d['declarationDate'])
             self.cursor.execute(query,values)
             self.connection.commit()
+    def store_historical(self, data):
+        query = (
+            "INSERT INTO historical_dividens(date,label,adjDividend,dividend,recordDate,paymentDate,declarationDate)"
+            "VALUES (%s,%s,%s,%s,%s,%s,%s)")
+        for d in data:
+            values = (d['date'],d['label'],d['adjDividend'],d['dividend'],d['recordDate'],d['paymentDate'],d['declarationDate'])
+            self.cursor.execute(query,values)
+            self.connection.commit()
 
+    def store_delisted(self, data):
+        query = (
+            "INSERT INTO delisted_companies(symbol,companyName,exchange,ipoDate,delistedDate)"
+            "VALUES (%s,%s,%s,%s,%s)")
+        for d in data:
+            values = (d['symbol'],d['companyName'],d['exchange'],d['ipoDate'],d['delistedDate'])
+            self.cursor.execute(query,values)
+            self.connection.commit()
